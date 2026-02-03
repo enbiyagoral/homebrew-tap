@@ -5,21 +5,21 @@
 class Sopsy < Formula
   desc "SOPS profile manager - manage age key profiles for encryption"
   homepage "https://github.com/enbiyagoral/sopsy"
-  version "0.3.2"
+  version "0.3.3"
   license "Apache-2.0"
 
   on_macos do
     if Hardware::CPU.intel?
-      url "https://github.com/enbiyagoral/sopsy/releases/download/v0.3.2/sopsy_0.3.2_darwin_amd64.tar.gz"
-      sha256 "dc3300b600da52824cab3ab151a55eaaf1b7f0a76718073339ba32bc71267f95"
+      url "https://github.com/enbiyagoral/sopsy/releases/download/v0.3.3/sopsy_0.3.3_darwin_amd64.tar.gz"
+      sha256 "5782a83672827a0d92787f87265a3f026e8b58db76d5ee694ecd9df2a3e447bc"
 
       def install
         bin.install "sopsy"
       end
     end
     if Hardware::CPU.arm?
-      url "https://github.com/enbiyagoral/sopsy/releases/download/v0.3.2/sopsy_0.3.2_darwin_arm64.tar.gz"
-      sha256 "056dbf27de0a07c00af08e317f86603ae134f5900d91ccaf841f0c96372f76ad"
+      url "https://github.com/enbiyagoral/sopsy/releases/download/v0.3.3/sopsy_0.3.3_darwin_arm64.tar.gz"
+      sha256 "10d193107cceed901dda087b8a8eedeb08191b3ba66d8fc379361d0bfe0cf788"
 
       def install
         bin.install "sopsy"
@@ -29,15 +29,15 @@ class Sopsy < Formula
 
   on_linux do
     if Hardware::CPU.intel? && Hardware::CPU.is_64_bit?
-      url "https://github.com/enbiyagoral/sopsy/releases/download/v0.3.2/sopsy_0.3.2_linux_amd64.tar.gz"
-      sha256 "8fe92693f69a476c586de183db28f087b3b3f5897a15d261c70150bca10117a7"
+      url "https://github.com/enbiyagoral/sopsy/releases/download/v0.3.3/sopsy_0.3.3_linux_amd64.tar.gz"
+      sha256 "44d71846e359154c897f85cc5638f778b9d40c4ae401106ae2c21193974f213f"
       def install
         bin.install "sopsy"
       end
     end
     if Hardware::CPU.arm? && Hardware::CPU.is_64_bit?
-      url "https://github.com/enbiyagoral/sopsy/releases/download/v0.3.2/sopsy_0.3.2_linux_arm64.tar.gz"
-      sha256 "23b92f95f065225d5d85f168e52cd76a5aa8820680b5a39e700a1eae703a3c34"
+      url "https://github.com/enbiyagoral/sopsy/releases/download/v0.3.3/sopsy_0.3.3_linux_arm64.tar.gz"
+      sha256 "aa6983f780e8581ef46600c3c35eacb3bb052963a2260b3926f10caa1d3ada70"
       def install
         bin.install "sopsy"
       end
