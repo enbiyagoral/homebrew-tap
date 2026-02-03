@@ -5,21 +5,21 @@
 class Sopsctl < Formula
   desc "SOPS profile manager - manage age key profiles for encryption"
   homepage "https://github.com/enbiyagoral/sopsctl"
-  version "0.3.0"
+  version "0.3.1"
   license "Apache-2.0"
 
   on_macos do
     if Hardware::CPU.intel?
-      url "https://github.com/enbiyagoral/sopsctl/releases/download/v0.3.0/sopsctl_0.3.0_darwin_amd64.tar.gz"
-      sha256 "17d51a186963a7331e502879a0b6928bcc66513fa1c417834830c89acbe27218"
+      url "https://github.com/enbiyagoral/sopsctl/releases/download/v0.3.1/sopsctl_0.3.1_darwin_amd64.tar.gz"
+      sha256 "251f9d642f79f9e7b1445a4488a1dd76c3215ff5c24db25b0dcf0feea86fb966"
 
       def install
         bin.install "sopsctl"
       end
     end
     if Hardware::CPU.arm?
-      url "https://github.com/enbiyagoral/sopsctl/releases/download/v0.3.0/sopsctl_0.3.0_darwin_arm64.tar.gz"
-      sha256 "be41c54356e3e491ac2abfe63de8aa9fa57efdf0c8a03aa1612363b9f6471b37"
+      url "https://github.com/enbiyagoral/sopsctl/releases/download/v0.3.1/sopsctl_0.3.1_darwin_arm64.tar.gz"
+      sha256 "e7b26f795f56c19d7b6b09829335f4493492590cfa2caa2714c9094a3cf65275"
 
       def install
         bin.install "sopsctl"
@@ -29,44 +29,29 @@ class Sopsctl < Formula
 
   on_linux do
     if Hardware::CPU.intel? && Hardware::CPU.is_64_bit?
-      url "https://github.com/enbiyagoral/sopsctl/releases/download/v0.3.0/sopsctl_0.3.0_linux_amd64.tar.gz"
-      sha256 "8ed55fc2dc7aba5c30d82b300439cfdc277241fe42e6a4ffc900757e22dd158f"
+      url "https://github.com/enbiyagoral/sopsctl/releases/download/v0.3.1/sopsctl_0.3.1_linux_amd64.tar.gz"
+      sha256 "d94de55ba0da8f42c2dd5c27828445c7ee3cf16558f9e8bbbaebfad4cf4239b2"
       def install
         bin.install "sopsctl"
       end
     end
     if Hardware::CPU.arm? && Hardware::CPU.is_64_bit?
-      url "https://github.com/enbiyagoral/sopsctl/releases/download/v0.3.0/sopsctl_0.3.0_linux_arm64.tar.gz"
-      sha256 "7e825333f64a6484007bdb42f2f8f587bf3f02eeed151752acf6b91c70f0a0e7"
+      url "https://github.com/enbiyagoral/sopsctl/releases/download/v0.3.1/sopsctl_0.3.1_linux_arm64.tar.gz"
+      sha256 "c4b758f903a9784e13906077d91d0bbbfb5729cd05826c80ed3ab6400f0c99a9"
       def install
         bin.install "sopsctl"
       end
     end
   end
 
-  def post_install
-    # Auto-install shell integration
-    zshrc = File.expand_path("~/.zshrc")
-    marker = "# sopsctl shell integration"
+  def caveats
+    <<~EOS
+      To enable shell integration, run:
+        sopsctl init zsh
 
-    if File.exist?(zshrc) && !File.read(zshrc).include?(marker)
-      File.open(zshrc, "a") do |f|
-        f.puts ""
-        f.puts marker
-        f.puts 'sopsctl() {'
-        f.puts '  if [[ "${1:-}" == "profile" && "${2:-}" == "use" ]]; then'
-        f.puts '    local output; output=$(command sopsctl "$@" 2>&1); local rc=$?'
-        f.puts '    if [[ $rc -eq 0 ]]; then'
-        f.puts '      while IFS= read -r line; do'
-        f.puts '        [[ "$line" == export\\ * ]] && eval "$line" && echo "✓ Set ${line#export }"'
-        f.puts '      done <<< "$output"'
-        f.puts '    else echo "$output" >&2; return $rc; fi'
-        f.puts '  else command sopsctl "$@"; fi'
-        f.puts '}'
-      end
-      ohai "Shell integration installed to #{zshrc}"
-      ohai "Restart your terminal or run: source ~/.zshrc"
-    end
+      Then restart your terminal or run:
+        source ~/.zshrc
+    EOS
   end
 
   test do
